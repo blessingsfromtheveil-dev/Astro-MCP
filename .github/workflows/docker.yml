@@ -1,0 +1,27 @@
+name: Docker
+
+on:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t astro-mcp .
+
+      - name: Verify image
+        run: |
+          docker run --rm astro-mcp python -c "import astro_mcp"
