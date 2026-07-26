@@ -1,0 +1,194 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "astro-mcp"
+version = "0.1.0"
+description = "A production-grade Model Context Protocol (MCP) server for professional astrology powered by Swiss Ephemeris."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Jesse Veils" }
+]
+
+keywords = [
+    "astrology",
+    "astronomy",
+    "swiss-ephemeris",
+    "mcp",
+    "model-context-protocol",
+    "fastmcp",
+    "ai",
+    "llm",
+    "transits",
+    "natal-chart"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Software Development :: Libraries",
+    "Typing :: Typed"
+]
+
+dependencies = [
+    "fastmcp>=3.4.4",
+    "mcp>=1.28.1",
+    "pydantic>=2.13",
+    "pydantic-settings>=2.14",
+    "python-dotenv>=1.2",
+    "httpx>=0.28",
+    "httpx-sse>=0.4",
+    "uvicorn>=0.35",
+    "starlette>=1.0",
+    "rich>=15.0",
+    "typing-extensions>=4.16",
+    "platformdirs>=4.11",
+    "watchfiles>=1.2",
+    "pyswisseph>=2.10.3.2"
+]
+
+[project.optional-dependencies]
+
+dev = [
+    "pytest>=9.1",
+    "pytest-asyncio>=1.4",
+    "pytest-cov>=7.0",
+    "ruff>=0.15",
+    "mypy>=1.18",
+    "build>=1.5",
+    "twine>=6.2",
+    "pre-commit>=4.3",
+    "coverage>=7.10",
+    "types-python-dateutil"
+]
+
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.6"
+]
+
+[project.urls]
+
+Homepage = "https://github.com/YOUR_USERNAME/Astro-MCP"
+Repository = "https://github.com/YOUR_USERNAME/Astro-MCP"
+Issues = "https://github.com/YOUR_USERNAME/Astro-MCP/issues"
+Documentation = "https://github.com/YOUR_USERNAME/Astro-MCP"
+
+[project.scripts]
+
+astro-mcp = "astro_mcp.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/astro_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/LICENSE",
+    "/pyproject.toml"
+]
+
+[tool.pytest.ini_options]
+
+pythonpath = [
+    "src"
+]
+
+testpaths = [
+    "tests"
+]
+
+addopts = "-ra -q"
+
+asyncio_mode = "auto"
+
+[tool.ruff]
+
+line-length = 88
+target-version = "py313"
+
+exclude = [
+    ".venv",
+    "dist",
+    "build",
+    "__pycache__"
+]
+
+[tool.ruff.lint]
+
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+    "SIM",
+    "C4",
+    "N",
+    "ANN"
+]
+
+ignore = [
+    "ANN101",
+    "ANN102"
+]
+
+[tool.ruff.format]
+
+quote-style = "double"
+
+indent-style = "space"
+
+skip-magic-trailing-comma = false
+
+[tool.mypy]
+
+python_version = "3.13"
+
+strict = true
+
+warn_unused_configs = true
+
+warn_return_any = true
+
+warn_unused_ignores = true
+
+show_error_codes = true
+
+check_untyped_defs = true
+
+disallow_any_generics = true
+
+disallow_untyped_defs = true
+
+plugins = []
+
+[tool.coverage.run]
+
+source = [
+    "astro_mcp"
+]
+
+branch = true
+
+[tool.coverage.report]
+
+show_missing = true
+
+skip_empty = true
+
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:"
+]
