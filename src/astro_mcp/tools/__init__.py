@@ -1,0 +1,3 @@
+"""
+Astrology MCP tools.
+"""
