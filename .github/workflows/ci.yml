@@ -1,52 +1,58 @@
-name: Astro-MCP CI
+name: Continuous Integration
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - develop
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         python-version:
+          - "3.11"
           - "3.12"
+          - "3.13"
 
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Upgrade pip
         run: |
-          python -m pip install --upgrade pip wheel setuptools
+          python -m pip install --upgrade pip wheel
 
-      - name: Install project
+      - name: Install package
         run: |
-          pip install -e .
-
-      - name: Install dependencies
-        run: |
-          pip install \
-            fastapi \
-            fastmcp \
-            uvicorn \
-            pyswisseph \
-            pytest \
-            pytest-asyncio \
-            ruff \
-            mypy
+          pip install -e .[dev]
 
       - name: Ruff
-        run: ruff check .
+        run: |
+          ruff check .
+
+      - name: Ruff Format Check
+        run: |
+          ruff format --check .
 
       - name: MyPy
-        run: mypy src
+        run: |
+          mypy src
 
       - name: Pytest
-        run: pytest
+        run: |
+          pytest -v
+
+      - name: Build Package
+        run: |
+          python -m build
